@@ -1,0 +1,3 @@
+﻿  main.cpp
+E:\CMPR131\Assignment6\Assignment6\main.cpp(180,36): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Assignment6.vcxproj -> E:\CMPR131\Assignment6\x64\Debug\Assignment6.exe
