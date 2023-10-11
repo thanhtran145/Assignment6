@@ -358,6 +358,20 @@ string toUpper(string& str)
 	return result;
 }
 
+//PreCondition: a string input
+//PostCondition: Function to remove leading and trailing spaces from a string
+string removeLeadingTrailingSpaces(const string& input) 
+{
+	size_t startPos = input.find_first_not_of(" \t\n\r");
+	if (startPos == string::npos) 
+	{
+		// The string consists only of spaces
+		return "";
+	}
+
+	size_t endPos = input.find_last_not_of(" \t\n\r");
+	return input.substr(startPos, endPos - startPos + 1);
+}
 
 
 

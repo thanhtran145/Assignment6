@@ -128,8 +128,11 @@ void Application()
 								getline(file, name, ',');
 								file >> score;
 
+								// Clear the leading white-spaces
+								string cleaned_name = removeLeadingTrailingSpaces(name);
+								
 								int ID = stoi(id);
-								courses[i].addStudent(ID, name, score);
+								courses[i].addStudent(ID, cleaned_name, score);
 							}
 
 							break;
@@ -144,9 +147,85 @@ void Application()
 
 			case 3:
 			{
-				
+				if (num_courses == 0)
+				{
+					cout << "\n\t\t\tERROR: number of courses has not been assigned.\n";
+					break;
+				}
 
+				if (courses.empty())
+				{
+					cout << "\n\t\tERROR: No data file has been read and stored into Courses.\n";
+					break;
+				}
 
+				cout << "\n\n\t\t\t3> Search by";
+				cout << "\n\t\t\t" << string(40, char(196));
+				cout << "\n\t\t\t  1. ID Number";
+				cout << "\n\t\t\t  2. Name";
+				cout << "\n\t\t\t  0. return";
+				cout << "\n\t\t\t" << string(40, char(196));
+				switch (inputInteger("\n\t\t\tOption: ", 0, 2))
+				{
+					case 1:
+					{
+						// Search by Student ID
+						int searchID = inputInteger("\n\t\tEnter the student ID to search: ");
+						int index = 0;
+
+						bool studentFound = false;
+
+						for (int i = 0; i < courses.size(); i++)
+						{
+							if (courses[i].getStudentIDs().search(searchID))
+							{
+								studentFound = true;
+								index = i;
+							}
+						}
+
+						if (!studentFound) 
+						{
+							cout << "\n\t\tStudent with ID " << searchID << " not found in any course.\n";
+						}
+						else 
+						{
+							cout << "\n\t\tID: " << searchID << " has been found in Course : " << courses[index].getName() << "\n";
+						}
+					}
+					break;
+
+					case 2:
+					{
+						// Search by Student Name
+						string searchName = inputString("\n\t\tEnter the student name to search: ", true);
+
+						bool studentFound = false;
+						int index = 0;
+
+						for (int i = 0; i < courses.size(); i++)
+						{
+							if (courses[i].getStudentNames().search(searchName))
+							{
+								studentFound = true;
+								index = i;
+							}
+						}
+
+						if (!studentFound)
+						{
+							cout << "\n\t\tStudent with name " << searchName << " not found in any course.\n";
+						}
+						else
+						{
+							cout << "\n\t\tID: " << searchName << " has been found in Course : " << courses[index].getName() << "\n";
+						}
+					}
+					break;
+
+					case 0: return;
+				}
+	
 			}
 				break;
 
@@ -199,19 +278,6 @@ void Application()
 					}
 						break;
 				}
-
-
-				/*cout << "\n\n\t\t Course(s)";
-				cout << "\n\t\t" << string(70, char(196));
-				cout << "\n\t\t\t1. CMPR-120-94820 Introduction to Programming";
-				cout << "\n\t\t\t2. all";
-				cout << "\n\t\t" << string(70, char(196));
-
-				switch (inputInteger("\n\t\t\tOption: ", 1, 2))
-				{
-					case
-				}*/
-
 			}
 				break;
 		case 0: return;

@@ -14,7 +14,7 @@ private:
     MyBagTemplate<double> studentScores;
     MyBagTemplate<char> studentGrades;
 
-    char calculateGrade(double score) 
+    char calculateGrade(double score) const
     {
         if (score >= 90.0) return 'A';
         else if (score >= 80.0) return 'B';
@@ -42,6 +42,11 @@ public:
     const MyBagTemplate<int>& getStudentIDs() const
     {
         return studentIDs;
+    }
+
+    const MyBagTemplate<string>& getStudentNames() const
+    {
+        return studentNames;
     }
 
     //**************************** Mutator ***************************//
@@ -92,6 +97,15 @@ public:
         {
             cout << "\n\t\t    " << i << "        " << studentIDs[i] << "                 " << studentNames[i] << "     " << right << setw(4) << studentScores[i] << "   " << studentGrades[i];
         }
-        cout << '\n';
+        
+        double average = 0;
+        for (int i = 0; i < studentIDs.getSize(); i++)
+        {
+            average += studentScores[i];
+        }
+
+        average /= studentGrades.getSize();
+     
+        cout << "\n\n\t\tAverage score and grade: " << average << "(" << calculateGrade(average) << ")";
     }
 };
