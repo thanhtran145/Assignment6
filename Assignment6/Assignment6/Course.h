@@ -56,6 +56,19 @@ public:
     }
 
     //**************************** Member Functions ***********************//
+
+    string getStudentName(int index) const
+    {
+        if (index >= 0 && index < studentIDs.getSize()) 
+        {
+            return studentNames[index];
+        }
+        else {
+            return "Invalid Index";
+        }
+    }
+
+
     void addStudent(int ID, const string& name, double score) 
     {
         studentIDs.insert(ID);
@@ -64,30 +77,27 @@ public:
         studentGrades.insert(calculateGrade(score));
     }
 
-    bool removeStudent(int ID) 
+    bool removeStudent(int id) 
     {
-        if (studentIDs.search(ID)) 
+        if (studentIDs.search(id))
         {
             int index = studentIDs.getSize() - 1;
-            while (studentIDs[index] != ID) 
-            {
+            while (studentIDs[index] != id) {
                 index--;
             }
-
             studentIDs[index] = studentIDs[studentIDs.getSize() - 1];
             studentNames[index] = studentNames[studentNames.getSize() - 1];
             studentScores[index] = studentScores[studentScores.getSize() - 1];
             studentGrades[index] = studentGrades[studentGrades.getSize() - 1];
-
             studentIDs.setSize(studentIDs.getSize() - 1);
             studentNames.setSize(studentNames.getSize() - 1);
             studentScores.setSize(studentScores.getSize() - 1);
             studentGrades.setSize(studentGrades.getSize() - 1);
-
             return true;
         }
         return false;
     }
+
 
     void displayCourse() const 
     {
@@ -95,7 +105,7 @@ public:
         cout << "\n\t\tindex    StudentID                      Name    Score   Grade";
         for (int i = 0; i < studentIDs.getSize(); i++)
         {
-            cout << "\n\t\t    " << i << "        " << studentIDs[i] << "                 " << studentNames[i] << "     " << right << setw(4) << studentScores[i] << "   " << studentGrades[i];
+            cout << "\n\t\t    " << i << "        " << studentIDs[i] << "                  " << studentNames[i] << "     " << right << setw(4) << studentScores[i] << "   " << studentGrades[i];
         }
         
         double average = 0;
@@ -104,8 +114,16 @@ public:
             average += studentScores[i];
         }
 
-        average /= studentGrades.getSize();
-     
-        cout << "\n\n\t\tAverage score and grade: " << average << "(" << calculateGrade(average) << ")";
+        if (studentIDs.getSize() == 1)
+        {
+            average = studentScores[0];
+            cout << "\n\n\t\tAverage score and grade: " << average << "(" << calculateGrade(average) << ")\n";
+        }
+        else 
+        {
+            average /= studentGrades.getSize();
+
+            cout << "\n\n\t\tAverage score and grade: " << average << "(" << calculateGrade(average) << ")\n";
+        }
     }
 };

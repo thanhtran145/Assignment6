@@ -92,6 +92,8 @@ void Application()
 					break;
 				}
 
+				courses.clear();
+
 				for (int i = 0; i < num_courses; i++)
 				{
 					while (true)
@@ -223,13 +225,70 @@ void Application()
 					}
 					break;
 
-					case 0: return;
+					case 0:
+					{
+						break;
+					}	
 				}
-	
 			}
 				break;
 
-			case 4: break;
+			case 4: 
+			{
+				if (num_courses == 0)
+				{
+					cout << "\n\t\t\tERROR: number of courses has not been assigned.\n";
+					break;
+				}
+
+				if (courses.empty())
+				{
+					cout << "\n\t\t\tERROR: No data file has been read and stored into Courses.\n";
+					break;
+				}
+
+				int idToRemove = inputInteger("\n\t\tEnter the student ID to remove: ");
+
+				int index = 0;
+
+				bool studentFound = false;
+
+				for (int i = 0; i < courses.size(); i++)
+				{
+					if (courses[i].getStudentIDs().search(idToRemove))
+					{
+						studentFound = true;
+						index = i;
+					}
+				}
+
+				if (!studentFound)
+				{
+					cout << "\n\t\tStudent with id " << idToRemove << " not found in any course.\n";
+					break;
+				}
+			
+
+				for (Course& course : courses) 
+				{
+					course.removeStudent(idToRemove);
+				}
+
+				cout << "\n\t\tStudent with ID " << idToRemove << " removed from all courses.\n";	
+
+				// logic error remove element for a vector 
+
+				//for (int i = courses.size() - 1; i >= 0; i--) 
+				//{
+				//	if (courses[i].getNumStudents() == 0)
+				//	{
+				//		courses.erase(courses.begin() + i);
+				//	}
+				//}
+				//break;
+
+			}
+				break;
 
 			case 5: 
 			{
@@ -240,6 +299,12 @@ void Application()
 				}
 
 				if (courses.empty())
+				{
+					cout << "\n\t\tERROR: No data file has been read and stored into Courses.\n";
+					break;
+				}
+
+				if (courses[0].getNumStudents() == 0)
 				{
 					cout << "\n\t\tERROR: No data file has been read and stored into Courses.\n";
 					break;
@@ -280,8 +345,10 @@ void Application()
 				}
 			}
 				break;
-		case 0: return;
-		default: cout << "\t\tERROR - Invalid option."; break;
+
+			case 0: return;
+
+			default: cout << "\t\tERROR - Invalid option."; break;
 		}
 		cout << "\n";
 		system("pause");
